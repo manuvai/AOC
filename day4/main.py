@@ -39,25 +39,30 @@ def get_hands_numbers(line: str) -> tuple[Hand]:
     return left_hand, right_hand
 
 def main():
-    lines = get_lines("day4/test.txt")
+    lines = get_lines("day4/input.txt")
 
     count = compute2(lines)
 
     print(count)
 
 def compute2(lines: list[str]) -> int:
-    copy_lines = []
+    copy_lines = [1 for _ in range(len(lines))]
+
     for i in range(len(lines)):
         left_hand, right_hand = get_hands_numbers(lines[i])
         
         corresponding = left_hand.corresponding(right_hand)
 
-        j = 0
-        while j < len(lines) and j < corresponding:
-            copy_lines.append(lines[i + j])
+        j = 1
+        while j < len(lines) and j <= corresponding:
+            copy_lines[i + j] += copy_lines[i] * 1
             j+=1
 
-    return compute1(copy_lines)
+    count = 0
+    for el in copy_lines:
+        count += el
+
+    return count
 
 
 
